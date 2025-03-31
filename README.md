@@ -1,2 +1,2 @@
-# ithadev
-✨ My portfolio
+# Ithadev
+
