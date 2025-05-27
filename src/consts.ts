@@ -1,11 +1,12 @@
 import type { Metadata, Site, Socials } from "@types";
 
 export const SITE: Site = {
-	NAME: "@ithadev",
+	TITLE: "@ithadev",
 	DESCRIPTION: "@ithadev is my blog",
 	EMAIL: "ithadev.nguyen@gmail.com",
 	NUM_POSTS_ON_HOMEPAGE: 2,
 	NUM_WORKS_ON_HOMEPAGE: 1,
+	NUM_PROJECTS_ON_HOMEPAGE: 3,
 };
 
 export const HOME: Metadata = {
