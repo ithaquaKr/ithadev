@@ -5,24 +5,28 @@ import Container from "@components/Container.astro";
 import { dateRange } from "@lib/utils";
 import { WORK } from "@consts";
 
-const workCollection = (await getCollection("works"))
-  .sort((a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf());
+const workCollection = (await getCollection("works")).sort(
+	(a, b) =>
+		new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf(),
+);
 
-const educationCollection = (await getCollection("educations"))
-  .sort((a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf());
+const educationCollection = (await getCollection("educations")).sort(
+	(a, b) =>
+		new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf(),
+);
 
 const works = await Promise.all(
-  workCollection.map(async (item) => {
-    const { Content } = await render(item);
-    return { ...item, Content };
-  })
+	workCollection.map(async (item) => {
+		const { Content } = await render(item);
+		return { ...item, Content };
+	}),
 );
 
 const educations = await Promise.all(
-  educationCollection.map(async (item) => {
-    const { Content } = await render(item);
-    return { ...item, Content };
-  })
+	educationCollection.map(async (item) => {
+		const { Content } = await render(item);
+		return { ...item, Content };
+	}),
 );
 ---
 
