@@ -64,10 +64,6 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-<!-- PageFind -->
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-<script is:inline src="/pagefind/pagefind-ui.js"></script>
-
 <ClientRouter />
 
 <script is:inline>
@@ -75,9 +71,11 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
     preloadTheme();
     onScroll();
     animate();
-    updateThemeButtons();
+    updateThemeButton();
+    updateActiveLinks();
     addCopyCodeButtons();
     setGiscusTheme();
+
 
     const backToTop = document.getElementById("back-to-top");
     backToTop?.addEventListener("click", (event) => scrollToTop(event));
@@ -85,64 +83,40 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
     const backToPrev = document.getElementById("back-to-prev");
     backToPrev?.addEventListener("click", () => window.history.back());
 
-    const lightThemeButton = document.getElementById("light-theme-button");
-    lightThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "light");
-      toggleTheme(false);
-      updateThemeButtons();
-    });
-
-    const darkThemeButton = document.getElementById("dark-theme-button");
-    darkThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "dark");
-      toggleTheme(true);
-      updateThemeButtons();
-    });
-
-    const systemThemeButton = document.getElementById("system-theme-button");
-    systemThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "system");
-      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
-      updateThemeButtons();
+    const themeSwitcher = document.getElementById("theme-switcher");
+    themeSwitcher?.addEventListener("click", () => {
+      const currentTheme = localStorage.getItem("theme") || "light";
+      const nextTheme = currentTheme === "light" ? "dark" : "light";
+      
+      localStorage.setItem("theme", nextTheme);
+      toggleTheme(nextTheme === "dark");
+      updateThemeButton();
     });
 
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", (event) => {
-        if (localStorage.theme === "system") {
-          toggleTheme(event.matches);
-        }
+        toggleTheme(event.matches);
+        updateThemeButton();
       });
 
     document.addEventListener("scroll", onScroll);
   }
 
-  function updateThemeButtons() {
-    const theme = localStorage.getItem("theme");
-    const lightThemeButton = document.getElementById("light-theme-button");
-    const darkThemeButton = document.getElementById("dark-theme-button");
-    const systemThemeButton = document.getElementById("system-theme-button");
+  function updateThemeButton() {
+    const theme = localStorage.getItem("theme") || "light";
+    const lightIcon = document.getElementById("light-icon");
+    const darkIcon = document.getElementById("dark-icon");
 
-    function removeActiveButtonTheme(button) {
-      button?.classList.remove("bg-black/5");
-      button?.classList.remove("dark:bg-white/5");
-    }
+    // Hide all icons first
+    lightIcon?.classList.add("hidden");
+    darkIcon?.classList.add("hidden");
 
-    function addActiveButtonTheme(button) {
-      button?.classList.add("bg-black/5");
-      button?.classList.add("dark:bg-white/5");
-    }
-
-    removeActiveButtonTheme(lightThemeButton);
-    removeActiveButtonTheme(darkThemeButton);
-    removeActiveButtonTheme(systemThemeButton);
-
+    // Show the appropriate icon
     if (theme === "light") {
-      addActiveButtonTheme(lightThemeButton);
-    } else if (theme === "dark") {
-      addActiveButtonTheme(darkThemeButton);
+      lightIcon?.classList.remove("hidden");
     } else {
-      addActiveButtonTheme(systemThemeButton);
+      darkIcon?.classList.remove("hidden");
     }
   }
 
@@ -260,7 +234,29 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
       giscus.src = url.toString();
     }
   };
+  function updateActiveLinks() {
+    const links = document.querySelectorAll('a.header-nav-link');
+    const currentPath = window.location.pathname;
+    const subpath = currentPath.match(/[^\/]+/g);
 
+    links.forEach((link) => {
+      const href = link.getAttribute('href');
+      const isActive = href === currentPath || href === `/${subpath?.[0]}`;
+      
+      // Remove existing classes
+      link.classList.remove('text-black', 'dark:text-white', 'text-gray-400', 'dark:text-gray-500');
+      
+      // Add appropriate classes based on active state
+      if (isActive) {
+        link.classList.add('text-black', 'dark:text-white');
+      } else {
+        link.classList.add('text-gray-400', 'dark:text-gray-500');
+      }
+    });
+  }
+
+  // Update when Astro handles client-side navigation
+  document.addEventListener('astro:after-swap', updateActiveLinks);
   document.addEventListener("DOMContentLoaded", () => init());
   document.addEventListener("astro:after-swap", () => init());
   preloadTheme();

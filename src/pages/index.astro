@@ -7,7 +7,7 @@ import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
-const blog = (await getCollection("blog"))
+const writings = (await getCollection("writings"))
 	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 	.slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
@@ -22,38 +22,29 @@ const projects: CollectionEntry<"projects">[] = (
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
-    <aside data-pagefind-ignore>
-      <h1 class="font-semibold text-black dark:text-white">
-        Introducing Astro Micro 🔬
-      </h1>
+    <aside >
+      <h4 class="animate font-semibold text-black dark:text-white">
+        <p>Hiep, Nguyen Tuan</p>
+        Software Engineer
+      </h4>
       <div class="space-y-16">
         <section>
           <article class="space-y-4">
-            <span class="animate">
-              <p>
-                I am a a Software/Cloud Engineer at Viettel Business
-                Solutions, based in Hanoi, Vietnam. Concurrently, I’m pursuing a
-                Master’s degree at the Posts and Telecommunications Institute of
-                Technology.
-              </p>
-              <p>
-                My passion lies in open-source technologies, and I am an avid user
-                of NeoVim and terminal-based tools.
-              </p>
-            </span>
-            <span class="animate">
-              <p>
-                Micro still comes with everything great about Nano — full type
-                safety, a sitemap, an RSS feed, and Markdown + MDX support.
-                Styled with TailwindCSS and preconfigured with system, light,
-                and dark themes.
-              </p>
-              <p>
-            Through this blog, I aim to share insights, experiences, and
-            knowledge gained from my endeavors in software development,
-            devops, cloud computing, and productivity.
-              </p>
-            </span>
+            <p class="animate">
+              I am a a Software/Cloud Engineer at Viettel Business
+              Solutions, based in Hanoi, Vietnam. Concurrently, I’m pursuing a
+              Master’s degree at the Posts and Telecommunications Institute of
+              Technology.
+            </p>
+            <p class="animate">
+              My passion lies in open-source technologies, and I am an avid user
+              of NeoVim and terminal-based tools.
+            </p>
+            <p class="animate">
+              Through this blog, I aim to share insights, experiences, and
+              knowledge gained from my endeavors in software development,
+              devops, cloud computing, and productivity.
+            </p>
           </article>
         </section>
 
@@ -62,11 +53,11 @@ const projects: CollectionEntry<"projects">[] = (
             <h2 class="font-semibold text-black dark:text-white">
               Latest posts
             </h2>
-            <Link href="/blog"> See all posts </Link>
+            <Link href="/writings"> See all posts </Link>
           </div>
           <ul class="not-prose flex flex-col gap-4">
             {
-              blog.map((post) => (
+              writings.map((post) => (
                 <li>
                   <ArrowCard entry={post} />
                 </li>
