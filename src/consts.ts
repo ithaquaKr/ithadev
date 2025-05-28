@@ -1,8 +1,8 @@
 import type { MenuItem, Metadata, Site, Socials } from "@types";
 
 export const SITE: Site = {
-  TITLE: "@ithadev",
-  DESCRIPTION: "@ithadev is my blog",
+  TITLE: "@ithaqua'kr",
+  DESCRIPTION: "Personal space to share everything.",
   EMAIL: "ithadev.nguyen@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 2,
   NUM_WORKS_ON_HOMEPAGE: 1,
@@ -10,7 +10,7 @@ export const SITE: Site = {
 };
 
 export const HOME: Metadata = {
-  TITLE: "Home",
+  TITLE: "Space",
   DESCRIPTION: "My personal blog and portfolio.",
 };
 
@@ -20,7 +20,7 @@ export const WRITINGS: Metadata = {
 };
 
 export const WORK: Metadata = {
-  TITLE: "Work",
+  TITLE: "Works",
   DESCRIPTION: "Where I have worked and what I have done.",
 };
 
@@ -32,7 +32,7 @@ export const PROJECTS: Metadata = {
 
 export const SOCIALS: Socials = [
   {
-    NAME: "twitter-x",
+    NAME: "@x",
     HREF: "https://twitter.com/ithadev_ng",
   },
   {
@@ -47,19 +47,20 @@ export const SOCIALS: Socials = [
 
 export const MENU_ITEMS: MenuItem[] = [
   {
-    label: SITE.TITLE,
+    label: "@ithaqua'kr",
     url: "/",
   },
   {
     label: "writings",
     url: "/writings",
   },
+  // TODO: Add path when project is ready
+  // {
+  //   label: "projects",
+  //   url: "/projects",
+  // },
   {
-    label: "projects",
-    url: "/projects",
-  },
-  {
-    label: "tags",
-    url: "/tags",
+    label: "works",
+    url: "/works",
   },
 ];

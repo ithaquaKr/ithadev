@@ -24,4 +24,24 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { writings, projects };
+const works = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/works" }),
+  schema: z.object({
+    company: z.string(),
+    role: z.string(),
+    dateStart: z.coerce.date(),
+    dateEnd: z.union([z.coerce.date(), z.string()]),
+  }),
+});
+
+const educations = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/educations" }),
+  schema: z.object({
+    university: z.string(),
+    major: z.string(),
+    dateStart: z.coerce.date(),
+    dateEnd: z.union([z.coerce.date(), z.string()]),
+  }),
+});
+
+export const collections = { writings, projects, works, educations };

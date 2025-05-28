@@ -2,122 +2,64 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import { SITE, HOME, SOCIALS } from "@consts";
-import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
-import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
 
-const writings = (await getCollection("writings"))
-	.filter((post) => !post.data.draft)
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-	.slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
-
-const projects: CollectionEntry<"projects">[] = (
-	await getCollection("projects")
-)
-	.filter((project) => !project.data.draft)
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-	.slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
 ---
-
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <aside >
-      <h4 class="animate font-semibold text-black dark:text-white">
-        <p>Hiep, Nguyen Tuan</p>
-        Software Engineer
-      </h4>
+			<h1
+				class='animate w-full text-start text-[min(12vw,72px)] font-medium leading-[1.0] tracking-[-2px] sm:tracking-[-4px]'>
+        meet @ithaqua'kr
+				<span class='text-gray-500 dark:text-gray-400'>Software Engineer</span>
+			</h1>
       <div class="space-y-16">
         <section>
           <article class="space-y-4">
             <p class="animate">
-              I am a a Software/Cloud Engineer at Viettel Business
-              Solutions, based in Hanoi, Vietnam. Concurrently, I’m pursuing a
-              Master’s degree at the Posts and Telecommunications Institute of
-              Technology.
+              👋 Hi there! I’m Nguyen Tuan Hiep <span class="italic">(ithaqua'kr)</span>, a software engineer with
+              experience across various roles including full-stack, SRE, and
+              DevOps. I mainly focus on backend development for cloud
+              ecosystems, while also working on system administration,
+              operations, and optimization.
             </p>
             <p class="animate">
-              My passion lies in open-source technologies, and I am an avid user
-              of NeoVim and terminal-based tools.
+              I hold a Master’s in Information Systems and spend my days working full-time while constantly learning and leveling up.
             </p>
             <p class="animate">
-              Through this blog, I aim to share insights, experiences, and
-              knowledge gained from my endeavors in software development,
-              devops, cloud computing, and productivity.
+              I’m a big fan of the NeoVim ecosystem, the terminal, and everything FOSS. 
             </p>
-          </article>
-        </section>
-
-        <section class="animate space-y-6">
-          <div class="flex flex-wrap items-center justify-between gap-y-2">
-            <h2 class="font-semibold text-black dark:text-white">
-              Latest posts
-            </h2>
-            <Link href="/writings"> See all posts </Link>
-          </div>
-          <ul class="not-prose flex flex-col gap-4">
-            {
-              writings.map((post) => (
-                <li>
-                  <ArrowCard entry={post} />
-                </li>
-              ))
-            }
-          </ul>
-        </section>
-
-        <section class="animate space-y-6">
-          <div class="flex flex-wrap items-center justify-between gap-y-2">
-            <h2 class="font-semibold text-black dark:text-white">
-              Recent projects
-            </h2>
-            <Link href="/projects"> See all projects </Link>
-          </div>
-          <ul class="not-prose flex flex-col gap-4">
-            {
-              projects.map((project) => (
-                <li>
-                  <ArrowCard entry={project} />
-                </li>
-              ))
-            }
-          </ul>
-        </section>
-
-        <section class="animate space-y-4">
-          <h2 class="font-semibold text-black dark:text-white">
-            Let's Connect
-          </h2>
-          <article>
-            <p>
-              If you want to get in touch with me about something or just to say
-              hi, reach out on social media or send me an email.
+            <p class="animate">
+              This space is where I share what I learn, explore new ideas,
+              and document my journey in tech. If you’re curious about
+              something or just want to catch up, feel free to drop me a line
+              on social media or send me an email.
             </p>
+            <ul class="animate not-prose flex flex-wrap gap-2">
+              {
+                SOCIALS.map((SOCIAL) => (
+                  <li class="flex gap-x-2 text-nowrap">
+                    <Link
+                      href={SOCIAL.HREF}
+                      external
+                      aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
+                    >
+                      {SOCIAL.NAME}
+                    </Link>
+                    {"/"}
+                  </li>
+                ))
+              }
+              <li class="line-clamp-1">
+                <Link
+                  href={`mailto:${SITE.EMAIL}`}
+                  aria-label={`Email ${SITE.TITLE}`}
+                >
+                  {SITE.EMAIL}
+                </Link>
+              </li>
+            </ul>
           </article>
-          <ul class="not-prose flex flex-wrap gap-2">
-            {
-              SOCIALS.map((SOCIAL) => (
-                <li class="flex gap-x-2 text-nowrap">
-                  <Link
-                    href={SOCIAL.HREF}
-                    external
-                    aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-                  >
-                    {SOCIAL.NAME}
-                  </Link>
-                  {"/"}
-                </li>
-              ))
-            }
-            <li class="line-clamp-1">
-              <Link
-                href={`mailto:${SITE.EMAIL}`}
-                aria-label={`Email ${SITE.TITLE}`}
-              >
-                {SITE.EMAIL}
-              </Link>
-            </li>
-          </ul>
         </section>
       </div>
     </aside>
