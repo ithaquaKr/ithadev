@@ -45,10 +45,7 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-<!-- Cloudflare Web Analytics -->
-<script is:inline defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={import.meta.env.CLOUDFLARE_ANALYTICS_TOKEN}>
-</script>
-<!-- End Cloudflare Web Analytics -->
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5c2e9bf649514e0ba1be6f3f5a29c76b"}'></script><!-- End Cloudflare Web Analytics -->
 
 <ClientRouter />
 
