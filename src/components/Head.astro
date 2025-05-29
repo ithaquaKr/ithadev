@@ -57,6 +57,10 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
     addCopyCodeButtons();
     setGiscusTheme();
 
+    // Remove existing scroll listener if any
+    document.removeEventListener("scroll", onScroll);
+    // Add new scroll listener
+    document.addEventListener("scroll", onScroll);
 
     const backToTop = document.getElementById("back-to-top");
     backToTop?.addEventListener("click", (event) => scrollToTop(event));
@@ -80,8 +84,6 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
         toggleTheme(event.matches);
         updateThemeButton();
       });
-
-    document.addEventListener("scroll", onScroll);
   }
 
   function updateThemeButton() {
@@ -112,7 +114,8 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
   }
 
   function onScroll() {
-    if (window.scrollY > 0) {
+    // Only add scrolled class if we've scrolled more than 100px
+    if (window.scrollY > 100) {
       document.documentElement.classList.add("scrolled");
     } else {
       document.documentElement.classList.remove("scrolled");
