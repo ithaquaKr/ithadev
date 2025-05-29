@@ -14,6 +14,14 @@ I built this simple personal website using Astro, a static site generator. I pic
 - **typescript**: for type-checking and better code quality
 - **biome**: Format, lint, and more in a fraction of a second.
 - **cloudflare worker**: for hosting the site and continuous deployment
+- **cloudflare analytics**: For analytics website
+
+## 🔧 environment variables
+
+```plaintext
+# Cloudflare Analytics
+CLOUDFLARE_ANALYTICS_TOKEN={"token": your_clarity_tracking_id}
+```
 
 ## 🤝 contributing
 
