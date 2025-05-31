@@ -64,8 +64,15 @@ const { title, description, image = "/content.png" } = Astro.props;
     const backToPrev = document.getElementById("back-to-prev");
     backToPrev?.addEventListener("click", () => window.history.back());
 
+    // Remove any existing theme switcher event listener
     const themeSwitcher = document.getElementById("theme-switcher");
-    themeSwitcher?.addEventListener("click", () => {
+    const oldThemeSwitcher = themeSwitcher?.cloneNode(true);
+    if (themeSwitcher && oldThemeSwitcher) {
+      themeSwitcher.parentNode?.replaceChild(oldThemeSwitcher, themeSwitcher);
+    }
+    
+    // Add new theme switcher event listener
+    oldThemeSwitcher?.addEventListener("click", () => {
       const currentTheme = localStorage.getItem("theme") || "light";
       const nextTheme = currentTheme === "light" ? "dark" : "light";
       
