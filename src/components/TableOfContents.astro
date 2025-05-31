@@ -14,7 +14,7 @@ export interface Heading {
 function buildToc(headings: Heading[]) {
 	const toc: Heading[] = [];
 	const parentHeadings = new Map();
-	headings.forEach((h) => {
+	for (const h of headings) {
 		const heading = { ...h, subheadings: [] };
 		parentHeadings.set(heading.depth, heading);
 		if (heading.depth === 2) {
@@ -22,7 +22,7 @@ function buildToc(headings: Heading[]) {
 		} else {
 			parentHeadings.get(heading.depth - 1).subheadings.push(heading);
 		}
-	});
+	}
 	return toc;
 }
 ---

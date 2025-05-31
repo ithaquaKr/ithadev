@@ -1,9 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
-import PageLayout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import { dateRange } from "@lib/utils";
 import { WORK } from "@consts";
+import PageLayout from "@layouts/Layout.astro";
+import { dateRange } from "@lib/utils";
 
 const workCollection = (await getCollection("works")).sort(
 	(a, b) =>
