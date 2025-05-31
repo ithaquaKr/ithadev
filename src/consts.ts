@@ -10,8 +10,8 @@ export const SITE: Site = {
 };
 
 export const HOME: Metadata = {
-	TITLE: "Space",
-	DESCRIPTION: "My personal blog and portfolio.",
+	TITLE: "Itha's Space",
+	DESCRIPTION: "Personal space to share everything.",
 };
 
 export const WRITINGS: Metadata = {
@@ -25,7 +25,7 @@ export const WORK: Metadata = {
 };
 
 export const PROJECTS: Metadata = {
-	TITLE: "Projects",
+	TITLE: "projects",
 	DESCRIPTION:
 		"A collection of my projects, with links to repositories and demos.",
 };
