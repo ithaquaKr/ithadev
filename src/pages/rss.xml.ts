@@ -2,16 +2,16 @@ import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import { SITE } from "@consts";
 
-export async function GET(context) {
-	const writings = (await getCollection("writings()")).filter(
+type Context = {
+	site: string;
+};
+
+export async function GET(context: Context) {
+	const writings = (await getCollection("writings")).filter(
 		(post) => !post.data.draft,
 	);
 
-	const projects = (await getCollection("projects")).filter(
-		(project) => !project.data.draft,
-	);
-
-	const items = [...writings, ...projects].sort(
+	const items = [...writings].sort(
 		(a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
 	);
 
