@@ -9,7 +9,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://ithadev.sh",
+	site: "https://space.itha.workers.dev",
 	integrations: [mdx(), sitemap()],
 
 	vite: {
