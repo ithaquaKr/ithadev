@@ -1,6 +1,6 @@
 ---
 company: "Viettel Business Solutions"
-role: "Cloud Engineer"
+role: "Site Reliability Engineer"
 dateStart: "03/09/2023"
 dateEnd: "Current"
 ---
