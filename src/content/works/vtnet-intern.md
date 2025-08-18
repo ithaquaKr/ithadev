@@ -5,5 +5,5 @@ dateStart: "04/20/2022"
 dateEnd: "10/20/2022"
 ---
 
-Iure illo neque tempora, voluptatem est quaerat voluptas praesentium ipsa dolorem dignissimos nulla ratione distinctio quae maiores eligendi nostrum? Quibusdam, debitis voluptatum, lorem ipsum dolor. Sit amet consectetur adipisicing elit.
-
+- Gained hands-on experience with Cloud Native, Docker, Kubernetes, OpenStack, and DevOps methodologies.
+- Collaborated with senior engineers to automate repetitive tasks using Python scripts, saving team members an average of 5 hours per week
