@@ -1,20 +1,22 @@
 ---
 import Container from "@components/Container.astro";
 import HeaderLink from "@components/HeaderLink.astro";
-import { MENU_ITEMS } from "@consts";
 ---
 
 <header transition:persist>
   <Container>
     <div class="flex flex-row justify-between items-center w-full">
-      <div class='flex flex-row gap-3 font-medium text-black items-start'>
-        {
-          MENU_ITEMS.map((item) => (
-            <HeaderLink href={item.url}>{item.label}</HeaderLink>
-          ))
-        }
-      </div>
-      <div class="flex flex-wrap items-center gap-1.5">
+      <nav id="breadcrumb-nav" class='flex flex-row items-center gap-2 font-medium' aria-label="Breadcrumb">
+        <a
+          href="/"
+          class="text-[#2C2A28] transition-colors duration-300 hover:text-[#588285] dark:text-white dark:hover:text-[#6B9B9E]"
+        >
+          @ithaqua'kr
+        </a>
+        <span id="breadcrumb-content"></span>
+      </nav>
+      <div class="flex flex-wrap items-center gap-3">
+        <HeaderLink href="/about"> $whoami</HeaderLink>
         <button
           id="theme-switcher"
           aria-label="Toggle theme"
@@ -63,3 +65,52 @@ import { MENU_ITEMS } from "@consts";
     </div>
   </Container>
 </header>
+
+<script>
+  function updateBreadcrumbs() {
+    const pathname = window.location.pathname;
+    const pathSegments = pathname.split('/').filter(segment => segment !== '');
+    const breadcrumbContent = document.getElementById('breadcrumb-content');
+
+    if (!breadcrumbContent) return;
+
+    // Clear existing breadcrumbs
+    breadcrumbContent.innerHTML = '';
+
+    // Don't show breadcrumbs for root (/) or /about
+    if (pathSegments.length === 0) return;
+    if (pathSegments[0] === 'about') return;
+
+    // Show only the first segment (e.g., 'writing')
+    // This works for both /writing and /writing/detail-post
+    const firstSegment = pathSegments[0];
+
+    // Add separator
+    const separator = document.createElement('span');
+    separator.className = 'text-[#8C8A88] dark:text-gray-500';
+    separator.textContent = '/ ';
+    breadcrumbContent.appendChild(separator);
+
+    // Show first segment as a link if we're deeper than level 1
+    if (pathSegments.length > 1) {
+      const link = document.createElement('a');
+      link.href = '/' + firstSegment;
+      link.className = 'text-[#5C5A58] transition-colors duration-300 hover:text-[#588285] dark:text-gray-400 dark:hover:text-[#6B9B9E]';
+      link.textContent = firstSegment;
+      breadcrumbContent.appendChild(link);
+    } else {
+      // Show as current page if we're at level 1
+      const current = document.createElement('span');
+      current.className = 'text-[#588285] dark:text-[#6B9B9E] font-medium';
+      current.textContent = firstSegment;
+      breadcrumbContent.appendChild(current);
+    }
+  }
+
+  // Update on initial load
+  updateBreadcrumbs();
+
+  // Update on navigation (Astro view transitions)
+  document.addEventListener('astro:page-load', updateBreadcrumbs);
+  document.addEventListener('astro:after-swap', updateBreadcrumbs);
+</script>
