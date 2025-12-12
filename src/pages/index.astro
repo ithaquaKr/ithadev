@@ -1,71 +1,115 @@
 ---
+import { getCollection } from "astro:content";
 import Container from "@components/Container.astro";
-import Link from "@components/Link.astro";
-import { HOME, SITE, SOCIALS } from "@consts";
+import { HOME, SITE } from "@consts";
 import Layout from "@layouts/Layout.astro";
+import { readingTime } from "@lib/utils";
+
+const allPosts = (await getCollection("writing"))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const latestPost = allPosts[0];
+const recentPosts = allPosts.slice(1, SITE.NUM_POSTS_ON_HOMEPAGE + 1);
+
+const tags = [
+	...new Set(allPosts.flatMap((post) => post.data.tags || [])),
+].sort();
 ---
+
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <Container>
-    <aside >
-			<h1
-				class='animate w-full text-start text-[min(12vw,86px)] font-medium leading-[1.0] tracking-[-2px] sm:tracking-[-4px]'>
-        meet @ithaqua'kr
-        <br>
-				<span class='text-gray-500 dark:text-gray-400'>Platform Engineer</span>
-			</h1>
-      <div class="space-y-16">
-        <section>
-          <article class="space-y-4">
-            <p class="animate">
-              👋 Hi there! I’m Nguyen Tuan Hiep <span
-                class="italic">(ithaqua'kr)</span>, a Platform Engineer
-              with expertise in building and operating scalable cloud-native
-              platforms. I hold an M.Eng in Information Systems and am based in
-              Ha Noi. I specialize in designing backend services,
-              developing automation tools, and streamlining deployment
-              processes for reliable and high-performance environments.
-            </p>
-            <p class="animate">
-              I’m a big fan of NeoVim, Terminal, and FOSS. I’m all about making
-              engineering work easier, simpler, and more productive.
-            </p>
-            <p class="animate">
-              I spend my days working full-time, learning new things, and
-              always trying to improve, one step at a time.
-            </p>
-            <p class="animate">
-              This space is where I share what I learn, explore new ideas, and
-              document my journey in tech. If you’re curious about something or
-              just want to catch up, feel free to drop me a line on social
-              media or send me an email.
-            </p>
-            <ul class="animate not-prose flex flex-wrap gap-2">
-              {
-                SOCIALS.map((SOCIAL) => (
-                  <li class="flex gap-x-2 text-nowrap">
-                    <Link
-                      href={SOCIAL.HREF}
-                      external
-                      aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-                    >
-                      {SOCIAL.NAME}
-                    </Link>
-                    {"/"}
-                  </li>
-                ))
-              }
-              <li class="line-clamp-1">
-                <Link
-                  href={`mailto:${SITE.EMAIL}`}
-                  aria-label={`Email ${SITE.TITLE}`}
-                >
-                  {SITE.EMAIL}
-                </Link>
-              </li>
-            </ul>
-          </article>
-        </section>
-      </div>
-    </aside>
-  </Container>
+	<Container>
+		<div class="space-y-10">
+			<!-- Latest Writing -->
+			{latestPost && (
+				<section class="animate space-y-2">
+					<p class="text-[#8C8A88] dark:text-gray-400">
+						Latest
+					</p>
+					<div>
+						<a href={`/writing/${latestPost.id}`} class="group">
+							<h2 class="text-xl font-medium text-[#2C2A28] group-hover:text-[#588285] transition-colors dark:text-white dark:group-hover:text-[#6B9B9E]">
+								{latestPost.data.title}
+							</h2>
+							<div class="mt-1 text-sm text-[#8C8A88] dark:text-gray-500 tabular-nums">
+								<time datetime={latestPost.data.date.toISOString()}>
+									{latestPost.data.date.toLocaleDateString('en-US', {
+										month: 'long',
+										day: 'numeric',
+										year: 'numeric'
+									})}
+                  {latestPost.body && (
+                    <>
+                      <span>&bull;</span>
+                      <span>{readingTime(latestPost.body)}</span>
+                    </>
+                  )}
+								</time>
+							</div>
+						</a>
+					</div>
+				</section>
+			)}
+
+			<hr class="border-[#D8D5D0] dark:border-white/10" />
+
+			<!-- Tags -->
+			<section class="animate space-y-2">
+				<p class="text-[#8C8A88] dark:text-gray-400">
+				  Tags	
+				</p>
+				<div class="leading-relaxed">
+					{tags.map((tag, index) => (
+						<>
+							<a
+								href={`/tags/${tag}`}
+								class="text-[#2C2A28] hover:text-[#588285] transition-colors dark:text-white dark:hover:text-[#6B9B9E]"
+							>
+								{tag}
+							</a>
+							{index < tags.length - 1 && (
+								<span class="text-[#8C8A88] dark:text-gray-500">, </span>
+							)}
+						</>
+					))}
+				</div>
+			</section>
+
+			<hr class="border-[#D8D5D0] dark:border-white/10" />
+
+			<!-- Writing -->
+			<section class="animate space-y-2">
+				<p class="text-[#8C8A88] dark:text-gray-400">
+					Writing
+				</p>
+				<ul class="space-y-0 tabular-nums">
+					{allPosts.slice(0, 5).map((post) => (
+						<li>
+							<a
+								href={`/writing/${post.id}`}
+								class="group flex items-baseline gap-3 py-1 hover:text-[#588285] transition-colors dark:hover:text-[#6B9B9E]"
+							>
+								<span class="text-[#8C8A88] text-sm shrink-0 dark:text-gray-500">
+									{post.data.date.getFullYear()} · {String(post.data.date.getMonth() + 1).padStart(2, '0')}
+								</span>
+								<span class="text-[#2C2A28] group-hover:underline decoration-[#588285] underline-offset-2 dark:text-white dark:decoration-[#6B9B9E]">
+									{post.data.title}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+				{allPosts.length > 5 && (
+					<div class="pt-2">
+						<a
+							href="/writing"
+							class="inline-block text-sm text-[#8C8A88] hover:text-[#588285] transition-colors dark:text-gray-400 dark:hover:text-[#6B9B9E]"
+						>
+							see all →
+						</a>
+					</div>
+				)}
+			</section>
+		</div>
+	</Container>
 </Layout>

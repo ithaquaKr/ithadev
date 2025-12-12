@@ -1,0 +1,76 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Container from "@components/Container.astro";
+import Giscus from "@components/Giscus.astro";
+import TableOfContents from "@components/TableOfContents.astro";
+import Layout from "@layouts/Layout.astro";
+import { readingTime } from "@lib/utils";
+
+export async function getStaticPaths() {
+	const posts = (await getCollection("writing"))
+		.filter((post) => !post.data.draft)
+		.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+	return posts.map((post) => ({
+		params: { id: post.id },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<"writing">;
+
+const post = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+	<Container>
+		<div class="animate">
+			<a
+				href="/writing"
+				class="text-sm text-[#8C8A88] hover:text-[#588285] transition-colors dark:text-gray-400 dark:hover:text-[#6B9B9E]"
+			>
+				← Back to writing
+			</a>
+		</div>
+		<div class="my-10 space-y-1">
+			<div class="animate flex items-center gap-1.5 text-sm text-[#8C8A88] dark:text-gray-500">
+				<time datetime={post.data.date.toISOString()}>
+					{post.data.date.toLocaleDateString('en-US', {
+						month: 'long',
+						day: 'numeric',
+						year: 'numeric'
+					})}
+				</time>
+				{post.body && (
+					<>
+						<span>&bull;</span>
+						<span>{readingTime(post.body)}</span>
+					</>
+				)}
+			</div>
+			<h1 class="animate text-3xl font-semibold text-[#2C2A28] dark:text-white">
+				{post.data.title}
+			</h1>
+			{
+				post.data.tags && post.data.tags?.length > 0 ? (
+					<div class="animate flex flex-wrap gap-2 pt-1">
+						{post.data.tags.map((tag) => (
+							<a
+								href={`/tags/${tag}`}
+								class="text-sm text-[#8C8A88] hover:text-[#588285] transition-colors dark:text-gray-400 dark:hover:text-[#6B9B9E]"
+							>
+								#{tag}
+							</a>
+						))}
+					</div>
+				) : null
+			}
+		</div>
+		{headings.length > 0 && <TableOfContents headings={headings} />}
+		<article class="animate">
+			<Content />
+			<div class="mt-24">
+				<Giscus />
+			</div>
+		</article>
+	</Container>
+</Layout>

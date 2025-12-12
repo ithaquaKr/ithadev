@@ -14,8 +14,13 @@ export const HOME: Metadata = {
 	DESCRIPTION: "Personal space to share everything.",
 };
 
-export const WRITINGS: Metadata = {
-	TITLE: "Writings",
+export const ABOUT: Metadata = {
+	TITLE: "About",
+	DESCRIPTION: "About me, my work, and my interests.",
+};
+
+export const WRITING: Metadata = {
+	TITLE: "Writing",
 	DESCRIPTION: "A collection of articles on topics I am passionate about.",
 };
 
@@ -51,16 +56,12 @@ export const MENU_ITEMS: MenuItem[] = [
 		url: "/",
 	},
 	{
-		label: "writings",
-		url: "/writings",
+		label: "writing",
+		url: "/writing",
 	},
 	// TODO: Add path when project is ready
 	// {
 	//   label: "projects",
 	//   url: "/projects",
 	// },
-	{
-		label: "works",
-		url: "/works",
-	},
 ];
