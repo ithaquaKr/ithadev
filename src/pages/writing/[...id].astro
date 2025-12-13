@@ -1,7 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import Container from "@components/Container.astro";
-import Giscus from "@components/Giscus.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Layout from "@layouts/Layout.astro";
 import { readingTime } from "@lib/utils";
@@ -68,9 +67,6 @@ const { Content, headings } = await render(post);
 		{headings.length > 0 && <TableOfContents headings={headings} />}
 		<article class="animate">
 			<Content />
-			<div class="mt-24">
-				<Giscus />
-			</div>
 		</article>
 	</Container>
 </Layout>
