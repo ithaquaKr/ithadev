@@ -34,7 +34,15 @@ const sortedPosts = posts.sort(
   description={`Posts tagged with ${tag}`}
 >
 	<Container>
-		<div class="space-y-10">
+		<div class="animate">
+			<a
+				href="/tags"
+				class="text-sm text-[#8C8A88] hover:text-[#588285] transition-colors dark:text-gray-400 dark:hover:text-[#6B9B9E]"
+			>
+				← Back to tags
+			</a>
+		</div>
+		<div class="space-y-10 mt-10">
 			<!-- Posts -->
 			<section class="animate space-y-2">
 				<p class="text-[#8C8A88] dark:text-gray-400">
