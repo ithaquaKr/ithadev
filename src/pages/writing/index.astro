@@ -18,12 +18,6 @@ const allPosts = (await getCollection("writing"))
 					<p class="text-[#8C8A88] dark:text-gray-400">
 						All Posts
 					</p>
-					<a
-						href="/tags"
-						class="text-sm text-[#8C8A88] hover:text-[#588285] transition-colors dark:text-gray-400 dark:hover:text-[#6B9B9E]"
-					>
-						view tags →
-					</a>
 				</div>
 				<ul class="space-y-0 tabular-nums">
 					{allPosts.map((post) => (

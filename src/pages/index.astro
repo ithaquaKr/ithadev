@@ -73,6 +73,16 @@ const tags = [
 						</>
 					))}
 				</div>
+				{tags.length > 5 && (
+					<div class="pt-2">
+						<a
+							href="/tags"
+							class="inline-block text-sm text-[#8C8A88] hover:text-[#588285] transition-colors dark:text-gray-400 dark:hover:text-[#6B9B9E]"
+						>
+							see all →
+						</a>
+					</div>
+				)}
 			</section>
 
 			<hr class="border-[#D8D5D0] dark:border-white/10" />
