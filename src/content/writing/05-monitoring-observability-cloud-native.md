@@ -1,13 +1,15 @@
 ---
 title: Monitoring and Observability in Cloud-Native Applications
-description: "Learn the difference between monitoring and observability, and how to implement effective observability practices in cloud-native environments"
-date: "2024-11-18"
+description: Learn the difference between monitoring and observability, and how to implement effective observability practices in cloud-native environments
+date: 2024-11-18
 tags:
   - monitoring
   - observability
   - cloud-native
   - devops
   - sre
+created: 2025-12-16T14:10
+updated: 2025-12-16T14:10
 ---
 
 ## Monitoring vs Observability
@@ -26,7 +28,7 @@ While often used interchangeably, monitoring and observability are distinct conc
 - **When**: Explores unknown failure modes
 - **How**: Questions data to find answers
 
-**Key Insight**: Monitoring tells you *when* something is wrong. Observability helps you understand *why*.
+**Key Insight**: Monitoring tells you _when_ something is wrong. Observability helps you understand _why_.
 
 ## The Three Pillars of Observability
 
@@ -35,6 +37,7 @@ While often used interchangeably, monitoring and observability are distinct conc
 Numerical measurements over time intervals.
 
 **Examples**:
+
 - CPU usage
 - Request rate
 - Error rate
@@ -47,6 +50,7 @@ Numerical measurements over time intervals.
 Discrete events that happened in your system.
 
 **Examples**:
+
 - Application logs
 - Access logs
 - Error logs
@@ -59,6 +63,7 @@ Discrete events that happened in your system.
 Request paths through distributed systems.
 
 **Examples**:
+
 - Request flow through microservices
 - Database query timing
 - External API calls
@@ -79,11 +84,11 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
-  - job_name: 'my-app'
+  - job_name: "my-app"
     static_configs:
-      - targets: ['localhost:3000']
+      - targets: ["localhost:3000"]
 
-  - job_name: 'kubernetes-pods'
+  - job_name: "kubernetes-pods"
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
@@ -97,8 +102,8 @@ scrape_configs:
 **Node.js Example**:
 
 ```javascript
-const express = require('express');
-const prometheus = require('prom-client');
+const express = require("express");
+const prometheus = require("prom-client");
 
 const app = express();
 
@@ -110,24 +115,24 @@ prometheus.collectDefaultMetrics({ register });
 
 // Custom metrics
 const httpRequestDuration = new prometheus.Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'Duration of HTTP requests in seconds',
-  labelNames: ['method', 'route', 'status_code'],
-  registers: [register]
+  name: "http_request_duration_seconds",
+  help: "Duration of HTTP requests in seconds",
+  labelNames: ["method", "route", "status_code"],
+  registers: [register],
 });
 
 const httpRequestTotal = new prometheus.Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status_code'],
-  registers: [register]
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status_code"],
+  registers: [register],
 });
 
 // Middleware to track requests
 app.use((req, res, next) => {
   const start = Date.now();
 
-  res.on('finish', () => {
+  res.on("finish", () => {
     const duration = (Date.now() - start) / 1000;
 
     httpRequestDuration
@@ -143,8 +148,8 @@ app.use((req, res, next) => {
 });
 
 // Metrics endpoint
-app.get('/metrics', async (req, res) => {
-  res.set('Content-Type', register.contentType);
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", register.contentType);
   res.end(await register.metrics());
 });
 
@@ -192,56 +197,60 @@ app.listen(3000);
 **Bad Logging**:
 
 ```javascript
-console.log('User logged in');
-console.log('Error: ' + error);
+console.log("User logged in");
+console.log("Error: " + error);
 ```
 
 **Good Logging**:
 
 ```javascript
-const winston = require('winston');
+const winston = require("winston");
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
+  defaultMeta: { service: "user-service" },
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
+  ],
 });
 
 // Structured log with context
-logger.info('User logged in', {
+logger.info("User logged in", {
   userId: user.id,
   email: user.email,
   timestamp: new Date().toISOString(),
-  ip: req.ip
+  ip: req.ip,
 });
 
 // Error logging with stack trace
-logger.error('Authentication failed', {
+logger.error("Authentication failed", {
   error: error.message,
   stack: error.stack,
   userId: user.id,
-  timestamp: new Date().toISOString()
+  timestamp: new Date().toISOString(),
 });
 ```
 
 ### Distributed Tracing with OpenTelemetry
 
 ```javascript
-const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
-const { registerInstrumentations } = require('@opentelemetry/instrumentation');
-const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
-const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
-const { Resource } = require('@opentelemetry/resources');
-const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
+const { NodeTracerProvider } = require("@opentelemetry/sdk-trace-node");
+const { registerInstrumentations } = require("@opentelemetry/instrumentation");
+const { HttpInstrumentation } = require("@opentelemetry/instrumentation-http");
+const {
+  ExpressInstrumentation,
+} = require("@opentelemetry/instrumentation-express");
+const { Resource } = require("@opentelemetry/resources");
+const {
+  SemanticResourceAttributes,
+} = require("@opentelemetry/semantic-conventions");
 
 // Create a tracer provider
 const provider = new NodeTracerProvider({
   resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: 'my-service',
+    [SemanticResourceAttributes.SERVICE_NAME]: "my-service",
   }),
 });
 
@@ -249,25 +258,22 @@ provider.register();
 
 // Auto-instrument HTTP and Express
 registerInstrumentations({
-  instrumentations: [
-    new HttpInstrumentation(),
-    new ExpressInstrumentation(),
-  ],
+  instrumentations: [new HttpInstrumentation(), new ExpressInstrumentation()],
 });
 
 // Manual instrumentation
-const tracer = provider.getTracer('my-app');
+const tracer = provider.getTracer("my-app");
 
-app.get('/api/users/:id', async (req, res) => {
-  const span = tracer.startSpan('get-user');
+app.get("/api/users/:id", async (req, res) => {
+  const span = tracer.startSpan("get-user");
 
   try {
-    span.setAttribute('user.id', req.params.id);
+    span.setAttribute("user.id", req.params.id);
 
     const user = await getUserFromDatabase(req.params.id);
 
-    span.addEvent('user-fetched', {
-      'user.name': user.name
+    span.addEvent("user-fetched", {
+      "user.name": user.name,
     });
 
     res.json(user);
@@ -373,7 +379,7 @@ function calculateErrorBudget(slo, actualUptime, windowDays) {
     totalBudget: allowedDowntime,
     consumed: actualDowntime,
     remaining: remainingBudget,
-    percentage: (remainingBudget / allowedDowntime) * 100
+    percentage: (remainingBudget / allowedDowntime) * 100,
   };
 }
 
@@ -413,7 +419,7 @@ console.log(budget);
       /
       sum(rate(http_requests_total[5m]))
     ) > 0.05
-  for: 5m  # Only alert if condition persists
+  for: 5m # Only alert if condition persists
   annotations:
     summary: "High error rate detected"
     description: "Error rate is {{ $value }}%"
@@ -494,29 +500,29 @@ metadata:
     prometheus.io/path: "/metrics"
 spec:
   containers:
-  - name: app
-    image: my-app:latest
-    ports:
-    - containerPort: 8080
-    resources:
-      requests:
-        memory: "128Mi"
-        cpu: "100m"
-      limits:
-        memory: "256Mi"
-        cpu: "200m"
-    livenessProbe:
-      httpGet:
-        path: /health
-        port: 8080
-      initialDelaySeconds: 30
-      periodSeconds: 10
-    readinessProbe:
-      httpGet:
-        path: /ready
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 5
+    - name: app
+      image: my-app:latest
+      ports:
+        - containerPort: 8080
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 30
+        periodSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 5
 ```
 
 ### Service Monitor
@@ -533,9 +539,9 @@ spec:
     matchLabels:
       app: my-app
   endpoints:
-  - port: metrics
-    interval: 30s
-    path: /metrics
+    - port: metrics
+      interval: 30s
+      path: /metrics
 ```
 
 ## Conclusion
