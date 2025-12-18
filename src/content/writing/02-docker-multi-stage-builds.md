@@ -186,21 +186,23 @@ tests/
 
 Let's compare a real application:
 
-| Approach | Image Size | Build Time |
-|----------|-----------|------------|
-| Single-stage | 1.2 GB | 3m 15s |
-| Multi-stage | 180 MB | 3m 30s |
-| Multi-stage + Alpine | 95 MB | 3m 45s |
+| Approach             | Image Size | Build Time |
+| -------------------- | ---------- | ---------- |
+| Single-stage         | 1.2 GB     | 3m 15s     |
+| Multi-stage          | 180 MB     | 3m 30s     |
+| Multi-stage + Alpine | 95 MB      | 3m 45s     |
 
 ## When to Use Multi-Stage Builds
 
 **Perfect for:**
+
 - Compiled languages (Go, Rust, Java)
 - Frontend applications (React, Vue, Angular)
 - Applications with build steps
 - Production deployments
 
 **May not need for:**
+
 - Simple scripts
 - Development environments
 - Prototypes

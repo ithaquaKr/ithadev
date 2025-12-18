@@ -13,12 +13,12 @@ updated: 2025-12-16T14:17
 
 ### Definition
 
-The Global Interpreter Lock (GIL) is a mechanism used in CPython (the standard implementation of Python) that allows only one native thread to hold control of the Python interpreter at any one time. 
+The Global Interpreter Lock (GIL) is a mechanism used in CPython (the standard implementation of Python) that allows only one native thread to hold control of the Python interpreter at any one time.
 This means that even on a multi-core processor, only one thread can execute Python bytecodes at a time. This is a significant limitation for CPU-bound tasks in Python.
 
 ### How it Works
 
-The GIL is a mutex (mutual exclusion) lock that protects access to Python objects. When a thread wants to execute Python bytecodes, it must first acquire the GIL. 
+The GIL is a mutex (mutual exclusion) lock that protects access to Python objects. When a thread wants to execute Python bytecodes, it must first acquire the GIL.
 Once it has acquired the GIL, it can execute Python bytecodes until it releases the GIL. The GIL is released when the thread encounters certain events, such as I/O operations or when it explicitly yields control.
 
 The GIL's primary purpose is to simplify memory management. By ensuring that only one thread is accessing Python objects at a time, the GIL prevents race conditions and makes it easier to implement garbage collection. Without the GIL, Python's memory management would be significantly more complex and potentially less efficient.
@@ -45,5 +45,6 @@ Other Python implementations, such as Jython (runs on the Java Virtual Machine) 
 
 ## References
 
-- While the information provided is based on a broad understanding of Python's internal workings and commonly available information, specific references to internal CPython documentation or research papers are not readily available in a consistently formatted manner. 
+- While the information provided is based on a broad understanding of Python's internal workings and commonly available information, specific references to internal CPython documentation or research papers are not readily available in a consistently formatted manner.
 - The knowledge is synthesized from numerous online tutorials, documentation, and discussions across various platforms. This makes providing specific citations challenging. However, the concepts described are widely accepted within the Python community.
+
