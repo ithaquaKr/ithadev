@@ -18,6 +18,7 @@ Terraform is an open-source Infrastructure as Code (IaC) tool created by HashiCo
 ### 1. Cloud Agnostic
 
 Terraform works with multiple cloud providers:
+
 - AWS
 - Azure
 - Google Cloud
@@ -27,6 +28,7 @@ Terraform works with multiple cloud providers:
 ### 2. Version Control
 
 Infrastructure code can be:
+
 - Stored in Git
 - Reviewed through pull requests
 - Tracked for changes
@@ -437,6 +439,7 @@ resource "aws_instance" "server" {
 Terraform is a powerful tool for managing infrastructure as code. Start small, learn the basics, and gradually adopt more advanced features as your needs grow.
 
 Key takeaways:
+
 - Infrastructure as code enables version control and collaboration
 - State management is crucial for team environments
 - Modules promote reusability

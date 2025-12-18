@@ -22,6 +22,7 @@ A workflow is an automated process defined in a YAML file in `.github/workflows/
 ### Events
 
 Events trigger workflows, such as:
+
 - Push to a branch
 - Pull request creation
 - Issue comments
@@ -43,9 +44,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -58,7 +59,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
         run: npm ci
@@ -119,8 +120,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -182,7 +183,7 @@ name: Deploy with Secrets
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
@@ -255,7 +256,7 @@ jobs:
   test:
     uses: ./.github/workflows/reusable-test.yml
     with:
-      node-version: '18'
+      node-version: "18"
 ```
 
 ## Best Practice #6: Docker Build and Push
@@ -267,8 +268,8 @@ name: Docker Build and Push
 
 on:
   push:
-    branches: [ main ]
-    tags: [ 'v*' ]
+    branches: [main]
+    tags: ["v*"]
 
 jobs:
   docker:
@@ -352,7 +353,7 @@ name: Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   release:
@@ -402,7 +403,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          text: 'CI Pipeline Failed!'
+          text: "CI Pipeline Failed!"
           webhook_url: ${{ secrets.SLACK_WEBHOOK }}
 ```
 
@@ -413,12 +414,12 @@ name: Full CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: "18"
 
 jobs:
   quality-checks:
@@ -431,7 +432,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -456,7 +457,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -480,7 +481,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -538,8 +539,8 @@ Use path filters and conditions:
 on:
   push:
     paths:
-      - 'src/**'
-      - 'package.json'
+      - "src/**"
+      - "package.json"
 ```
 
 ### 3. Not Caching Dependencies
