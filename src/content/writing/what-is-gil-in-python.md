@@ -6,7 +6,7 @@ tags:
   - python
   - programing
 created: 2025-12-13T02:54
-updated: 2025-12-16T14:17
+updated: 2025-12-20T11:32
 ---
 
 ## What is GIL in Python?
