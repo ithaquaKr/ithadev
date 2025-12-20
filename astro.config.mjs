@@ -12,6 +12,12 @@ export default defineConfig({
 	site: "https://space.itha.workers.dev",
 	integrations: [mdx(), sitemap()],
 
+	markdown: {
+		shikiConfig: {
+			theme: "css-variables",
+		},
+	},
+
 	vite: {
 		plugins: [tailwindcss()],
 	},
