@@ -15,41 +15,22 @@ import Layout from "@layouts/Layout.astro";
           <article class="space-y-4">
             <p class="animate">
               I'm Nguyen Tuan Hiep <span
-                class="italic">(ithaqua'kr)</span>, an engineer focused on
+              class="italic">(ithaqua'kr)</span>, an engineer focused on
               designing, building, and maintaining scalable business platforms.
               I’m currently working full-time while continuously learning to
               improve myself.
-            </p>
             <p class="animate">
               I’m also a terminal guy and a fan of FOSS.
-            </p>
-            <p class="animate">
               Now I spend my days working full-time, learning new things, and
               always trying to improve, one step at a time.
             </p>
+            <p class="animate">
+              This space is where I share what I learn, explore new ideas, and
+              document my journey in tech. If you're curious about something or
+              just want to catch up, feel free to drop me a line on social
+              media or send me an email.
+            </p>
           </article>
-        </section>
-
-        <section class="space-y-6">
-          <h2 class="animate text-2xl font-semibold text-[#2C2A28] dark:text-white">
-            My Journey
-          </h2>
-          <article class="space-y-4">
-
-          </article>
-        </section>
-
-        <section class="space-y-6">
-
-          <h2 class="animate text-2xl font-semibold text-[#2C2A28] dark:text-white">
-            Get in Touch
-          </h2>
-          <p class="animate">
-            This space is where I share what I learn, explore new ideas, and
-            document my journey in tech. If you're curious about something or
-            just want to catch up, feel free to drop me a line on social
-            media or send me an email.
-          </p>
           <article>
             <ul class="animate not-prose flex flex-wrap gap-2">
               {
@@ -74,7 +55,21 @@ import Layout from "@layouts/Layout.astro";
                   {SITE.EMAIL}
                 </Link>
               </li>
+                <li class="line-clamp-1">
+                {"/"}
+                <Link href="assets/resume.pdf" external>
+                  My CV
+                </Link>
+                </li>
             </ul>
+          </article>
+        </section>
+        <section class="space-y-6">
+          <h2 class="animate text-2xl font-semibold text-[#2C2A28] dark:text-white">
+            My Journey
+          </h2>
+          <article class="space-y-4">
+            Journal
           </article>
         </section>
       </div>
