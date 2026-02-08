@@ -27,6 +27,8 @@ export const WORK: Metadata = {
 	DESCRIPTION: "Where I have worked and what I have done.",
 };
 
+export const SUBSTACK_FEED_URL = "https://ithaquakr.substack.com/feed";
+
 export const SOCIALS: Socials = [
 	{
 		NAME: "@x",

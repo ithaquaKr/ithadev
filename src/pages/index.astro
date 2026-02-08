@@ -1,20 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import Container from "@components/Container.astro";
-import { HOME, SITE } from "@consts";
+import { HOME } from "@consts";
 import Layout from "@layouts/Layout.astro";
-import { readingTime } from "@lib/utils";
+import { getAllPosts } from "@lib/utils";
 
-const allPosts = (await getCollection("writing"))
-	.filter((post) => !post.data.draft)
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
+const allPosts = await getAllPosts();
 const latestPost = allPosts[0];
-const recentPosts = allPosts.slice(1, SITE.NUM_POSTS_ON_HOMEPAGE + 1);
-
-const tags = [
-	...new Set(allPosts.flatMap((post) => post.data.tags || [])),
-].sort();
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
@@ -27,9 +18,14 @@ const tags = [
 						Latest
 					</p>
 					<div>
-						<a href={`/writing/${latestPost.id}`} class="group">
+						<a
+							href={latestPost.data.externalUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group"
+						>
 							<h2 class="text-xl font-medium text-[#2C2A28] group-hover:text-[#588285] transition-colors dark:text-white dark:group-hover:text-[#6B9B9E]">
-								{latestPost.data.title}
+								{latestPost.data.title}<span class="text-[#8C8A88]"> ↗</span>
 							</h2>
 							<div class="mt-1 text-sm text-[#8C8A88] dark:text-gray-500 tabular-nums">
 								<time datetime={latestPost.data.date.toISOString()}>
@@ -38,52 +34,12 @@ const tags = [
 										day: 'numeric',
 										year: 'numeric'
 									})}
-                  {latestPost.body && (
-                    <>
-                      <span>&bull;</span>
-                      <span>{readingTime(latestPost.body)}</span>
-                    </>
-                  )}
 								</time>
 							</div>
 						</a>
 					</div>
 				</section>
 			)}
-
-			<hr class="border-[#D8D5D0] dark:border-white/10" />
-
-			<!-- Tags -->
-			<section class="animate space-y-2">
-				<p class="text-[#8C8A88] dark:text-gray-400">
-				  Tags	
-				</p>
-				<div class="leading-relaxed">
-					{tags.map((tag, index) => (
-						<>
-							<a
-								href={`/tags/${tag}`}
-								class="text-[#2C2A28] hover:text-[#588285] transition-colors dark:text-white dark:hover:text-[#6B9B9E]"
-							>
-								{tag}
-							</a>
-							{index < tags.length - 1 && (
-								<span class="text-[#8C8A88] dark:text-gray-500">, </span>
-							)}
-						</>
-					))}
-				</div>
-				{tags.length > 5 && (
-					<div class="pt-2">
-						<a
-							href="/tags"
-							class="inline-block text-sm text-[#8C8A88] hover:text-[#588285] transition-colors dark:text-gray-400 dark:hover:text-[#6B9B9E]"
-						>
-							see all →
-						</a>
-					</div>
-				)}
-			</section>
 
 			<hr class="border-[#D8D5D0] dark:border-white/10" />
 
@@ -96,14 +52,16 @@ const tags = [
 					{allPosts.slice(0, 5).map((post) => (
 						<li>
 							<a
-								href={`/writing/${post.id}`}
+								href={post.data.externalUrl}
+								target="_blank"
+								rel="noopener noreferrer"
 								class="group flex items-baseline gap-3 py-1 hover:text-[#588285] transition-colors dark:hover:text-[#6B9B9E]"
 							>
 								<span class="text-[#8C8A88] text-sm shrink-0 dark:text-gray-500">
 									{post.data.date.getFullYear()} · {String(post.data.date.getMonth() + 1).padStart(2, '0')}
 								</span>
 								<span class="text-[#2C2A28] group-hover:underline decoration-[#588285] underline-offset-2 dark:text-white dark:decoration-[#6B9B9E]">
-									{post.data.title}
+									{post.data.title}<span class="text-[#8C8A88]"> ↗</span>
 								</span>
 							</a>
 						</li>

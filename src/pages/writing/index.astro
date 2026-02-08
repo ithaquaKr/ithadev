@@ -1,12 +1,10 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
 import Container from "@components/Container.astro";
 import { WRITING } from "@consts";
 import Layout from "@layouts/Layout.astro";
+import { getAllPosts } from "@lib/utils";
 
-const allPosts = (await getCollection("writing"))
-	.filter((post) => !post.data.draft)
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const allPosts = await getAllPosts();
 ---
 
 <Layout title={WRITING.TITLE} description={WRITING.DESCRIPTION}>
@@ -23,14 +21,16 @@ const allPosts = (await getCollection("writing"))
 					{allPosts.map((post) => (
 						<li>
 							<a
-								href={`/writing/${post.id}`}
+								href={post.data.externalUrl}
+								target="_blank"
+								rel="noopener noreferrer"
 								class="group flex items-baseline gap-3 py-1 hover:text-[#588285] transition-colors dark:hover:text-[#6B9B9E]"
 							>
 								<span class="text-[#8C8A88] text-sm shrink-0 dark:text-gray-500">
 									{post.data.date.getFullYear()} · {String(post.data.date.getMonth() + 1).padStart(2, '0')}
 								</span>
 								<span class="text-[#2C2A28] group-hover:underline decoration-[#588285] underline-offset-2 dark:text-white dark:decoration-[#6B9B9E]">
-									{post.data.title}
+									{post.data.title}<span class="text-[#8C8A88]"> ↗</span>
 								</span>
 							</a>
 						</li>

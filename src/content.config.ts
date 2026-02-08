@@ -1,16 +1,7 @@
 import { defineCollection, z } from "astro:content";
+import { SUBSTACK_FEED_URL } from "@consts";
+import { substackLoader } from "@lib/substack-loader";
 import { glob } from "astro/loaders";
-
-const writing = defineCollection({
-	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/writing" }),
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		date: z.coerce.date(),
-		draft: z.boolean().optional(),
-		tags: z.array(z.string()).optional(),
-	}),
-});
 
 const works = defineCollection({
 	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/works" }),
@@ -32,4 +23,14 @@ const educations = defineCollection({
 	}),
 });
 
-export const collections = { writing, works, educations };
+const substack = defineCollection({
+	loader: substackLoader({ url: SUBSTACK_FEED_URL }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		date: z.coerce.date(),
+		externalUrl: z.string(),
+	}),
+});
+
+export const collections = { works, educations, substack };
